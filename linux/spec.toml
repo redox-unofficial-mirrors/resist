@@ -5,26 +5,3 @@ source = "uname -sm"
 output = """
 Linux x86_64
 """
-
-[tests.c]
-kind = "c"
-source = """
-#include <stdio.h>
-
-int main(int argc, char ** argv) {
-    printf("c test\\n");
-    return 0;
-}
-"""
-output = """
-c test
-"""
-
-[tests.python]
-kind = "python"
-source = """
-print("python test")
-"""
-output = """
-python test
-"""
