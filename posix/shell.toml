@@ -4,6 +4,7 @@ desc = "POSIX.1-2017: https://pubs.opengroup.org/onlinepubs/9699919799/"
 #TODO: alias, ar, at, awk (not on Redox)
 
 [tests.basename]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/basename.html"
 source = """
 basename /usr/bin
 basename /usr/bin in
@@ -16,6 +17,7 @@ b
 #TODO: batch, bc (not on Redox)
 
 [tests.cat]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cat.html"
 source = """
 echo two > 2
 echo one > 1
@@ -29,6 +31,7 @@ two
 #TODO: cd, chgrp, chmod, chown, cksum (predictable output)
 
 [tests.cmp]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cmp.html"
 source = """
 echo one > 1
 echo two > 2
@@ -43,6 +46,7 @@ output = """
 #TODO: comm (complicated)
 
 [tests.command]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/command.html"
 source = """
 command -V echo
 """
@@ -51,6 +55,7 @@ echo is a shell builtin
 """
 
 [tests.cp]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cp.html"
 source = """
 echo two > 2
 echo one > 1
@@ -66,6 +71,7 @@ two
 #TODO: crontab, csplit (not on Redox)
 
 [tests.cut]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/cut.html"
 source = """
 echo a,b,c,d,e,f,g | cut -d , -f 2,4,6
 """
@@ -76,6 +82,7 @@ b,d,f
 #TODO: date (uutils version is odd)
 
 [tests.dd]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/dd.html"
 source = """
 echo one > 1
 dd if=1 of=2 bs=1 count=2 2>/dev/null
@@ -88,6 +95,7 @@ output = "on"
 
 
 [tests.dirname]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/dirname.html"
 source = """
 dirname /usr/bin
 """
@@ -96,6 +104,7 @@ output = """
 """
 
 [tests.du]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/du.html"
 source = """
 dd if=/dev/zero of=1 bs=1024 count=256 2>/dev/null
 du 1
@@ -105,6 +114,7 @@ output = """
 """
 
 [tests.echo]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/echo.html"
 source = """
 echo a b c d
 """
@@ -115,6 +125,7 @@ a b c d
 #TODO: ed (the standard editor)
 
 [tests.env]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/env.html"
 source = """
 env KEY=VALUE printenv KEY
 """
@@ -125,6 +136,7 @@ VALUE
 #TODO: ex (interactive program)
 
 [tests.expand]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/expand.html"
 source = """
 echo "test\texpand" | expand
 """
@@ -133,6 +145,7 @@ test    expand
 """
 
 [tests.expr]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/expr.html"
 source = """
 expr 2 + 2
 """
@@ -141,6 +154,7 @@ output = """
 """
 
 [tests.false]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/false.html"
 source = """
 false && echo TRUE || echo FALSE
 """
@@ -151,6 +165,7 @@ FALSE
 #TODO: fc, fg, file (not on Redox)
 
 [tests.find]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/find.html"
 source = """
 echo one > 1
 echo two > 2
@@ -167,6 +182,7 @@ output = """
 """
 
 [tests.fold]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/fold.html"
 source = """
 echo abcdefghijklmnopqrstuvwxyz | fold -w 3
 """
@@ -185,6 +201,7 @@ yz
 #TODO: fuser, gencat, getconf, getopts (not on Redox)
 
 [tests.grep]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/grep.html"
 source = """
 echo one > 1
 echo two >> 1
@@ -199,31 +216,32 @@ two
 """
 
 [tests.hash]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/hash.html"
 source = """
 hash sh
 """
 output = """
 """
 
-#TODO: hangs on Redox
-# [tests.head]
-# source = """
-# echo one > 1
-# echo two >> 1
-# echo three >> 1
-# head -n 1 1
-# head -n -1 1
-# head -n 2 1
-# head -n -2 1
-# """
-# output = """
-# one
-# one
-# two
-# one
-# two
-# one
-# """
+[tests.head]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/head.html"
+source = """
+echo one > 1
+echo two >> 1
+echo three >> 1
+head -n 1 1
+head -n -1 1
+head -n 2 1
+head -n -2 1
+"""
+output = """
+one
+one
+two
+one
+two
+one
+"""
 
 #TODO: iconv (evil, use UTF-8!)
 #TODO: id (predictable output)
@@ -232,6 +250,7 @@ output = """
 #TODO: join (complicated)
 
 [tests.kill]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/kill.html"
 source = """
 sleep 60&
 KILL_PID="$!"
@@ -246,6 +265,7 @@ output = """
 #TODO: link (not implemented on Redox)
 
 [tests.ln]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ln.html"
 source = """
 echo one > 1
 ln -s 1 2
@@ -258,6 +278,7 @@ one
 #TODO: locale, localedef, logger, logname, lp (evil, not on Redox)
 
 [tests.ls]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/ls.html"
 source = """
 echo one > 1
 echo two > 2
@@ -273,6 +294,7 @@ output = """
 #TODO: m4 (evil, not on Redox)
 
 [tests.make]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html"
 source = """
 echo "1:" > Makefile
 echo "\techo one > 1" >> Makefile
@@ -288,6 +310,7 @@ one
 #TODO: mesg (not on Redox)
 
 [tests.mkdir]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/mkdir.html"
 source = """
 mkdir directory
 cd directory
@@ -301,6 +324,7 @@ directory
 #TODO: more (interactive)
 
 [tests.mv]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/mv.html"
 source = """
 echo one > 1
 echo two > 2
@@ -316,6 +340,7 @@ one
 #TODO: newgrp, nice (not on Redox)
 
 [tests.nl]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/nl.html"
 source = """
 echo one > 1
 echo two >> 1
@@ -332,6 +357,7 @@ output = """
 #TODO: nohup (not on Redox)
 
 [tests.od]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/od.html"
 source = """
 echo abcdefghijklmnopqrstuvwxyz > 1
 od -t x1 1
@@ -348,6 +374,7 @@ output = """
 #TODO: pr (not on Redox)
 
 [tests.printf]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/printf.html"
 source = """
 printf 'printf %d %.1f %c %s\\n' 1 2.0 c str
 """
@@ -359,6 +386,7 @@ printf 1 2.0 c str
 #TODO: pwd (predictable output)
 
 [tests.read]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/read.html"
 source = """
 echo one > 1
 echo two >> 1
@@ -375,6 +403,7 @@ line: two
 #TOOD: renice (not on Redox)
 
 [tests.rm]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/rm.html"
 source = """
 touch 1 2 3 4
 ls -1
@@ -394,6 +423,7 @@ output = """
 """
 
 [tests.rmdir]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/rmdir.html"
 source = """
 mkdir 1 2 3 4
 ls -1
@@ -417,6 +447,7 @@ output = """
 #TODO: sleep (needs a reliable way to measure time)
 
 [tests.sort]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sort.html"
 source = """
 for c in z y x w v u t s r q p o n m l k j i h g f e d c b a
 do
@@ -457,60 +488,61 @@ z
 #TODO: strings, strip (predictable output)
 #TODO: stty, tabs (not on Redox)
 
-#TODO: hangs on Redox
-# [tests.tail]
-# source = """
-# echo one > 1
-# echo two >> 1
-# echo three >> 1
-# tail -n 1 1
-# tail -n +1 1
-# tail -n 2 1
-# tail -n +2 1
-# """
-# output = """
-# three
-# one
-# two
-# three
-# two
-# three
-# two
-# three
-# """
+[tests.tail]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/tail.html"
+source = """
+echo one > 1
+echo two >> 1
+echo three >> 1
+tail -n 1 1
+tail -n +1 1
+tail -n 2 1
+tail -n +2 1
+"""
+output = """
+three
+one
+two
+three
+two
+three
+two
+three
+"""
 
-#TODO: hangs on Redox
-# [tests.tee]
-# source = """
-# echo one | tee 1
-# echo two >> 1
-# echo three | tee -a 1
-# cat 1
-# """
-# output = """
-# one
-# three
-# one
-# two
-# three
-# """
+[tests.tee]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/tee.html"
+source = """
+echo one | tee 1
+echo two >> 1
+echo three | tee -a 1
+cat 1
+"""
+output = """
+one
+three
+one
+two
+three
+"""
 
-#TODO: hangs on Redox
-# [tests.test]
-# source = """
-# mkdir directory
-# touch file
-# touch script
-# chmod +x script
-# test -d directory -a ! -d file
-# test -f file -a ! -f directory
-# test -x script -a ! -x file
-# """
-# output = ""
+[tests.test]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html"
+source = """
+mkdir directory
+touch file
+touch script
+chmod +x script
+test -d directory -a ! -d file
+test -f file -a ! -f directory
+test -x script -a ! -x file
+"""
+output = ""
 
 #TODO: time (predictable output)
 
 [tests.touch]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/touch.html"
 source = """
 touch 1 2 3
 ls -1
@@ -521,10 +553,114 @@ output = """
 3
 """
 
+#TODO: tput (not on Redox)
+
+[tests.tr]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/tr.html"
+source = """
+echo abcdefghijklmnopqrstuvwxyz | tr a b | tr s b | tr -d z | tr -s b
+"""
+output = """
+bcdefghijklmnopqrbtuvwxy
+"""
+
 [tests.true]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/true.html"
 source = """
 true && echo TRUE || echo FALSE
 """
 output = """
 TRUE
+"""
+
+#TODO: inconsistent output and errors out on Redox
+# [tests.tsort]
+# desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/tsort.html"
+# source = """
+# echo "a b c c d e" > 1
+# echo "g g" >> 1
+# echo "f g e f" >> 1
+# echo "h h" >> 1
+# tsort 1
+# """
+# output = """
+# a
+# c
+# d
+# h
+# b
+# e
+# f
+# g
+# """
+
+#TODO: tty (not on Redox)
+
+[tests.type]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/type.html"
+source = """
+type echo
+"""
+output = """
+echo is a shell builtin
+"""
+
+#TODO: ulimit (not on Redox)
+
+[tests.umask]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/umask.html"
+source = """
+UMASK="$(umask)"
+umask 0000
+umask
+umask 0777
+umask
+umask "${UMASK}"
+"""
+output = """
+0000
+0777
+"""
+
+#TODO: unalias
+#uname is tested elsewhere
+
+[tests.unexpand]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/unexpand.html"
+source = """
+echo "         test unexpand" | unexpand
+"""
+output = """
+\t test unexpand
+"""
+
+[tests.uniq]
+desc = "https://pubs.opengroup.org/onlinepubs/9699919799/utilities/uniq.html"
+source = """
+echo one > 1
+echo two >> 1
+echo two >> 1
+echo two >> 1
+echo three >> 1
+echo three >> 1
+echo four >> 1
+echo five >> 1
+echo five >> 1
+echo four >> 1
+echo three >> 1
+echo two >> 1
+echo one >> 1
+echo one >> 1
+uniq 1
+"""
+output = """
+one
+two
+three
+four
+five
+four
+three
+two
+one
 """
