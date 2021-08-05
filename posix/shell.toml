@@ -132,3 +132,127 @@ expr 2 + 2
 output = """
 4
 """
+
+[tests.false]
+source = """
+false && echo TRUE || echo FALSE
+"""
+output = """
+FALSE
+"""
+
+#TODO: fc, fg, file
+
+[tests.find]
+source = """
+echo one > 1
+echo two > 2
+find .
+find . -name 2
+find . -name 1
+"""
+output = """
+.
+./1
+./2
+./2
+./1
+"""
+
+[tests.fold]
+source = """
+echo abcdefghijklmnopqrstuvwxyz | fold -w 3
+"""
+output = """
+abc
+def
+ghi
+jkl
+mno
+pqr
+stu
+vwx
+yz
+"""
+
+#TODO: fuser, gencat, getconf, getopts
+
+[tests.grep]
+source = """
+echo one > 1
+echo two >> 1
+echo three >> 1
+grep two 1
+grep -v three 1
+"""
+output = """
+two
+one
+two
+"""
+
+[tests.hash]
+source = """
+hash sh
+"""
+output = """
+"""
+
+#TODO: hangs Redox test
+# [tests.head]
+# source = """
+# echo one > 1
+# echo two >> 1
+# echo three >> 1
+# head -n 1 1
+# head -n -1 1
+# head -n 2 1
+# head -n -2 1
+# """
+# output = """
+# one
+# one
+# two
+# one
+# two
+# one
+# """
+
+#TODO: iconv (evil, use UTF-8!)
+#TODO: id (no way to generate stable output)
+#TODO: ipcrm, ipcs
+#TODO: jobs (no guarantee of stable output)
+#TODO: join (complicated)
+
+#TODO: Redox returns 128 instead of 130
+# [tests.kill]
+# source = """
+# sleep 60&
+# KILL_PID="$!"
+# kill -2 "$KILL_PID"
+# wait "$KILL_PID" || echo "$?"
+# """
+# output = """
+# 130
+# """
+
+#TODO: lex (not on Redox)
+#TODO: link (not implemented on Redox)
+
+[tests.ln]
+source = """
+echo one > 1
+ln -s 1 2
+cat 2
+"""
+output = """
+one
+"""
+
+[tests.true]
+source = """
+true && echo TRUE || echo FALSE
+"""
+output = """
+TRUE
+"""
