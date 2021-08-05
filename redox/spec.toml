@@ -2,5 +2,22 @@ name = "Redox System Interface"
 
 [tests.uname]
 name = "uname"
-command = "uname -sm"
-output = "Redox x86_64\n"
+source = "uname -sm"
+output = """
+Redox x86_64
+"""
+
+[tests.c]
+name = "c"
+kind = "c"
+source = """
+#include <stdio.h>
+
+int main(int argc, char ** argv) {
+    printf("c test\\n");
+    return 0;
+}
+"""
+output = """
+c test
+"""

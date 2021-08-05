@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::{
     error::Error,
+    fs,
     io::Read,
     process::{
         Command,
@@ -8,23 +9,67 @@ use std::{
     },
     str,
 };
+use tempfile::tempdir;
+
+#[allow(non_camel_case_types)]
+#[derive(Debug, Deserialize, Serialize)]
+pub enum TestKind {
+    c,
+    python,
+    shell,
+}
+
+impl Default for TestKind {
+    fn default() -> Self {
+        Self::shell
+    }
+}
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Test {
     pub name: String,
-    pub command: String,
+    #[serde(default)]
+    pub kind: TestKind,
+    pub source: String,
     pub output: String,
 }
 
 impl Test {
     pub fn build(&self) -> Result<(), Box<dyn Error>> {
+        println!("Kind: `{:?}`\n", self.kind);
+        println!("Source:\n```\n{}\n```\n", self.source);
+
         let mut output = Vec::new();
         {
-            let mut child = Command::new("sh")
-                .arg("-c")
-                .arg(&self.command)
-                .stdout(Stdio::piped())
-                .spawn()?;
+            let dir = tempdir()?;
+
+            let mut child = match self.kind {
+                TestKind::c => {
+                    fs::write(dir.path().join("src.c"), &self.source)?;
+                    Command::new("sh")
+                        .arg("-c")
+                        .arg("gcc src.c -o bin && ./bin")
+                        .current_dir(dir.path())
+                        .stdout(Stdio::piped())
+                        .spawn()?
+                },
+                TestKind::python => {
+                    Command::new("python")
+                        .arg("-c")
+                        .arg(&self.source)
+                        .current_dir(dir.path())
+                        .stdout(Stdio::piped())
+                        .spawn()?
+                },
+                TestKind::shell => {
+                    Command::new("sh")
+                        .arg("-c")
+                        .arg(&self.source)
+                        .current_dir(dir.path())
+                        .stdout(Stdio::piped())
+                        .spawn()?
+                },
+            };
 
             //TODO: timeout, async read
             let mut stdout = child.stdout.take().unwrap();
@@ -34,9 +79,9 @@ impl Test {
                 output.extend_from_slice(&buf[..count]);
 
                 if let Some(status) = child.try_wait()? {
-                    println!("    * status: {}", status);
+                    println!("Status: `{}`\n", status);
                     if ! status.success() {
-                        println!("    * exit status indicates failure");
+                        println!("**Status indicates failure**\n");
                     }
                     break;
                 }
@@ -44,10 +89,10 @@ impl Test {
         }
 
         let output = str::from_utf8(&output)?;
-        println!("    * output:\n```\n{}\n```", output);
+        println!("Output:\n```\n{}\n```\n", output);
         if output != self.output {
-            println!("    * expected:\n```\n{}\n```", self.output);
-            println!("    * output does not match expected");
+            println!("Expected:\n```\n{}\n```\n", self.output);
+            println!("**Output does not match expected**\n");
         }
 
         Ok(())

@@ -2,4 +2,4 @@
 
 set -e
 
-cargo run --release -- linux/spec.toml
+cargo run --release -- linux/spec.toml | tee linux/spec.md

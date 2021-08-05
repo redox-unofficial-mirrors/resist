@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use std::{
-    error::Error,
     collections::HashMap,
+    error::Error,
 };
 
 use crate::test::Test;
@@ -14,11 +14,13 @@ pub struct Spec {
 
 impl Spec {
     pub fn build(&self) -> Result<(), Box<dyn Error>> {
-        println!("* spec '{}'", self.name);
-        for (test_id, test) in self.tests.iter() {
-            println!("  * test {}: '{}'", test_id, test.name);
+        println!("# {}\n", self.name);
+
+        for (_test_id, test) in self.tests.iter() {
+            println!("## {}\n", test.name);
             test.build()?;
         }
+
         Ok(())
     }
 }

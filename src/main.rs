@@ -9,11 +9,8 @@ fn main() {
     }
 
     for arg in args {
-        eprintln!("resist specification '{}'", arg);
         match resist(&arg) {
-            Ok(()) => {
-                eprintln!("successfully built '{}'", arg);
-            },
+            Ok(()) => (),
             Err(err) => {
                 eprintln!("failed to build '{}': {}", arg, err);
                 process::exit(1);
