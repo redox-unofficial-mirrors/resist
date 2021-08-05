@@ -1,7 +1,7 @@
 name = "Portable Operating System Interface - Shell and Utilities"
 desc = "POSIX.1-2017: https://pubs.opengroup.org/onlinepubs/9699919799/"
 
-#TODO: alias, ar, at, awk
+#TODO: alias, ar, at, awk (not on Redox)
 
 [tests.basename]
 source = """
@@ -13,7 +13,7 @@ bin
 b
 """
 
-#TODO: batch, bc
+#TODO: batch, bc (not on Redox)
 
 [tests.cat]
 source = """
@@ -26,22 +26,29 @@ one
 two
 """
 
-#TODO: cd, chgrp, chmod, chown, cksum
+#TODO: cd, chgrp, chmod, chown, cksum (predictable output)
 
-#TODO: install diffutils on Redox
-# [tests.cmp]
-# source = """
-# echo one > 1
-# echo two > 2
-# cmp 1 1
-# cmp 2 2
-# cmp 1 2 || true
-# """
-# output = """
-# 1 2 differ: byte 1, line 1
-# """
+[tests.cmp]
+source = """
+echo one > 1
+echo two > 2
+cmp 1 1
+cmp 2 2
+cmp 1 2 || true
+"""
+output = """
+1 2 differ: byte 1, line 1
+"""
 
-#TODO: comm, command
+#TODO: comm (complicated)
+
+[tests.command]
+source = """
+command -V echo
+"""
+output = """
+echo is a shell builtin
+"""
 
 [tests.cp]
 source = """
@@ -56,7 +63,7 @@ one
 two
 """
 
-#TODO: crontab, csplit
+#TODO: crontab, csplit (not on Redox)
 
 [tests.cut]
 source = """
@@ -141,7 +148,7 @@ output = """
 FALSE
 """
 
-#TODO: fc, fg, file
+#TODO: fc, fg, file (not on Redox)
 
 [tests.find]
 source = """
@@ -175,7 +182,7 @@ vwx
 yz
 """
 
-#TODO: fuser, gencat, getconf, getopts
+#TODO: fuser, gencat, getconf, getopts (not on Redox)
 
 [tests.grep]
 source = """
@@ -198,7 +205,7 @@ hash sh
 output = """
 """
 
-#TODO: hangs Redox test
+#TODO: hangs on Redox
 # [tests.head]
 # source = """
 # echo one > 1
@@ -219,22 +226,21 @@ output = """
 # """
 
 #TODO: iconv (evil, use UTF-8!)
-#TODO: id (no way to generate stable output)
-#TODO: ipcrm, ipcs
-#TODO: jobs (no guarantee of stable output)
+#TODO: id (predictable output)
+#TODO: ipcrm, ipcs (not on Redox)
+#TODO: jobs (predictable output)
 #TODO: join (complicated)
 
-#TODO: Redox returns 128 instead of 130
-# [tests.kill]
-# source = """
-# sleep 60&
-# KILL_PID="$!"
-# kill -2 "$KILL_PID"
-# wait "$KILL_PID" || echo "$?"
-# """
-# output = """
-# 130
-# """
+[tests.kill]
+source = """
+sleep 60&
+KILL_PID="$!"
+kill -2 "$KILL_PID"
+wait "$KILL_PID" || echo "$?"
+"""
+output = """
+130
+"""
 
 #TODO: lex (not on Redox)
 #TODO: link (not implemented on Redox)
@@ -247,6 +253,272 @@ cat 2
 """
 output = """
 one
+"""
+
+#TODO: locale, localedef, logger, logname, lp (evil, not on Redox)
+
+[tests.ls]
+source = """
+echo one > 1
+echo two > 2
+ls -1a
+"""
+output = """
+.
+..
+1
+2
+"""
+
+#TODO: m4 (evil, not on Redox)
+
+[tests.make]
+source = """
+echo "1:" > Makefile
+echo "\techo one > 1" >> Makefile
+make 1
+cat 1
+"""
+output = """
+echo one > 1
+one
+"""
+
+#TODO: man (interactive)
+#TODO: mesg (not on Redox)
+
+[tests.mkdir]
+source = """
+mkdir directory
+cd directory
+basename "${PWD}"
+"""
+output = """
+directory
+"""
+
+#TODO: mkfifo (not on Redox)
+#TODO: more (interactive)
+
+[tests.mv]
+source = """
+echo one > 1
+echo two > 2
+mv 1 2
+ls -1
+cat 2
+"""
+output = """
+2
+one
+"""
+
+#TODO: newgrp, nice (not on Redox)
+
+[tests.nl]
+source = """
+echo one > 1
+echo two >> 1
+echo three >> 1
+nl 1
+"""
+output = """
+     1	one
+     2	two
+     3	three
+"""
+
+#TODO: nm (predictable output)
+#TODO: nohup (not on Redox)
+
+[tests.od]
+source = """
+echo abcdefghijklmnopqrstuvwxyz > 1
+od -t x1 1
+"""
+output = """
+0000000 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f 70
+0000020 71 72 73 74 75 76 77 78 79 7a 0a
+0000033
+"""
+
+#TODO: paste (complicated)
+#TODO: patch (install diffutils on Redox)
+#TODO: pathchk (not on Redox)
+#TODO: pr (not on Redox)
+
+[tests.printf]
+source = """
+printf 'printf %d %.1f %c %s\\n' 1 2.0 c str
+"""
+output = """
+printf 1 2.0 c str
+"""
+
+#TODO: ps (predictable output)
+#TODO: pwd (predictable output)
+
+[tests.read]
+source = """
+echo one > 1
+echo two >> 1
+cat 1 | while read line
+do
+    echo "line: $line"
+done
+"""
+output = """
+line: one
+line: two
+"""
+
+#TOOD: renice (not on Redox)
+
+[tests.rm]
+source = """
+touch 1 2 3 4
+ls -1
+rm 1 2
+ls -1
+rm 4
+ls -1
+"""
+output = """
+1
+2
+3
+4
+3
+4
+3
+"""
+
+[tests.rmdir]
+source = """
+mkdir 1 2 3 4
+ls -1
+rmdir 1 2
+ls -1
+rmdir 4
+ls -1
+"""
+output = """
+1
+2
+3
+4
+3
+4
+3
+"""
+
+#TODO: sed (install on Redox)
+#TODO: sh (isn't this already tested enough)
+#TODO: sleep (needs a reliable way to measure time)
+
+[tests.sort]
+source = """
+for c in z y x w v u t s r q p o n m l k j i h g f e d c b a
+do
+    echo "${c}" >> 1
+done
+sort 1
+"""
+output = """
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
+"""
+
+#TODO: split (complicated)
+#TODO: strings, strip (predictable output)
+#TODO: stty, tabs (not on Redox)
+
+#TODO: hangs on Redox
+# [tests.tail]
+# source = """
+# echo one > 1
+# echo two >> 1
+# echo three >> 1
+# tail -n 1 1
+# tail -n +1 1
+# tail -n 2 1
+# tail -n +2 1
+# """
+# output = """
+# three
+# one
+# two
+# three
+# two
+# three
+# two
+# three
+# """
+
+#TODO: hangs on Redox
+# [tests.tee]
+# source = """
+# echo one | tee 1
+# echo two >> 1
+# echo three | tee -a 1
+# cat 1
+# """
+# output = """
+# one
+# three
+# one
+# two
+# three
+# """
+
+#TODO: hangs on Redox
+# [tests.test]
+# source = """
+# mkdir directory
+# touch file
+# touch script
+# chmod +x script
+# test -d directory -a ! -d file
+# test -f file -a ! -f directory
+# test -x script -a ! -x file
+# """
+# output = ""
+
+#TODO: time (predictable output)
+
+[tests.touch]
+source = """
+touch 1 2 3
+ls -1
+"""
+output = """
+1
+2
+3
 """
 
 [tests.true]

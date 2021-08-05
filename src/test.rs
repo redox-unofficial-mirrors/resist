@@ -43,6 +43,7 @@ impl Test {
         println!("Source:\n```{:?}\n{}\n```\n", self.kind, self.source);
 
         let mut output = Vec::new();
+        let mut pass = true;
         {
             let dir = tempdir()?;
 
@@ -85,6 +86,7 @@ impl Test {
                     println!("Status: `{}`\n", status);
                     if ! status.success() {
                         println!("**Status indicates failure**\n");
+                        pass = false;
                     }
                     break;
                 }
@@ -96,6 +98,13 @@ impl Test {
         if output != self.output {
             println!("Expected:\n```\n{}\n```\n", self.output);
             println!("**Output does not match expected**\n");
+            pass = false;
+        }
+
+        if pass {
+            println!("Result: **PASS**\n")
+        } else {
+            println!("Result: **FAIL**\n")
         }
 
         Ok(())
