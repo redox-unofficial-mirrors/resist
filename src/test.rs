@@ -37,7 +37,7 @@ pub struct Test {
 impl Test {
     pub fn build(&self) -> Result<(), Box<dyn Error>> {
         println!("Kind: `{:?}`\n", self.kind);
-        println!("Source:\n```\n{}\n```\n", self.source);
+        println!("Source:\n```{:?}\n{}\n```\n", self.kind, self.source);
 
         let mut output = Vec::new();
         {

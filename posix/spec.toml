@@ -1,0 +1,16 @@
+name = "Portable Operating System Interface"
+
+[tests.printf]
+name = "printf"
+kind = "c"
+source = """
+#include <stdio.h>
+
+int main(int argc, char ** argv) {
+    printf("printf %d %.1f %c %s\\n", 1, 2.0, 'c', "str");
+    return 0;
+}
+"""
+output = """
+printf 1 2.0 c str
+"""

@@ -7,5 +7,6 @@ edition = "2018"
 
 [dependencies]
 serde = { version = "1.0.127", features = ["derive"] }
-toml = "0.5.8"
+serde-tuple-vec-map = "1.0.0"
 tempfile = "3.2.0"
+toml = "0.5.8"

@@ -118,6 +118,7 @@ name = "resist"
 version = "0.1.0"
 dependencies = [
  "serde",
+ "serde-tuple-vec-map",
  "tempfile",
  "toml",
 ]
@@ -129,6 +130,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f03b9878abf6d14e6779d3f24f07b2cfa90352cfec4acc5aab8f1ac7f146fae8"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde-tuple-vec-map"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0fb19e2d413f0c7c977fbb859eba82d3027e6da303749c6a5476d9f0ed3b9c76"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

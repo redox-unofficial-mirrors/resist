@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::HashMap,
     error::Error,
 };
 
@@ -9,7 +8,8 @@ use crate::test::Test;
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Spec {
     pub name: String,
-    pub tests: HashMap<String, Test>,
+    #[serde(with = "tuple_vec_map")]
+    pub tests: Vec<(String, Test)>,
 }
 
 impl Spec {

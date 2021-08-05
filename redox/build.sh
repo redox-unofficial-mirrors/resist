@@ -2,4 +2,4 @@
 
 set -e
 
-redoxer run --output redox/spec.md -- --release -- redox/spec.toml
+redoxer run --output redox/spec.md -- --release -- redox/spec.toml posix/spec.toml
