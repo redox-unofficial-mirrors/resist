@@ -28,6 +28,7 @@ impl Default for TestKind {
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Test {
     pub name: String,
+    pub desc: Option<String>,
     #[serde(default)]
     pub kind: TestKind,
     pub source: String,
@@ -36,6 +37,9 @@ pub struct Test {
 
 impl Test {
     pub fn build(&self) -> Result<(), Box<dyn Error>> {
+        if let Some(desc) = &self.desc {
+            println!("{}\n", desc)
+        }
         println!("Kind: `{:?}`\n", self.kind);
         println!("Source:\n```{:?}\n{}\n```\n", self.kind, self.source);
 

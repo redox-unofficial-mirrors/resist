@@ -1,7 +1,12 @@
 name = "Portable Operating System Interface"
+desc = "POSIX.1-2017: https://pubs.opengroup.org/onlinepubs/9699919799/"
 
-[tests.printf]
-name = "printf"
+[tests.stdio]
+name = "stdio"
+desc = """
+stdio.h - standard buffered input/output:
+https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/stdio.h.html
+"""
 kind = "c"
 source = """
 #include <stdio.h>
