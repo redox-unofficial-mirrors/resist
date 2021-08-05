@@ -21,8 +21,8 @@ impl Spec {
             println!("{}\n", desc);
         }
 
-        for (_test_id, test) in self.tests.iter() {
-            println!("## {}\n", test.name);
+        for (test_name, test) in self.tests.iter() {
+            println!("## {}\n", test_name);
             test.build()?;
         }
 

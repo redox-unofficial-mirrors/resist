@@ -1,0 +1,57 @@
+name = "Portable Operating System Interface - Shell and Utilities"
+desc = "POSIX.1-2017: https://pubs.opengroup.org/onlinepubs/9699919799/"
+
+#TODO: alias, ar, at, awk
+
+[tests.basename]
+source = """
+basename /usr/bin
+basename /usr/bin in
+"""
+output = """
+bin
+b
+"""
+
+#TODO: batch, bc
+
+[tests.cat]
+source = """
+echo two > 2
+echo one > 1
+cat 1 2
+"""
+output = """
+one
+two
+"""
+
+#TODO: cd, chgrp, chmod, chown, cksum
+
+#TODO: install diffutils on Redox
+# [tests.cmp]
+# source = """
+# echo one > 1
+# echo two > 2
+# cmp 1 1
+# cmp 2 2
+# cmp 1 2 || true
+# """
+# output = """
+# 1 2 differ: byte 1, line 1
+# """
+
+#TODO: comm, command
+
+[tests.cp]
+source = """
+echo two > 2
+echo one > 1
+cp 1 3
+cp 2 4
+cat 3 4
+"""
+output = """
+one
+two
+"""

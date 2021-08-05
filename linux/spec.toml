@@ -1,14 +1,12 @@
 name = "Linux System Interface"
 
 [tests.uname]
-name = "uname"
 source = "uname -sm"
 output = """
 Linux x86_64
 """
 
 [tests.c]
-name = "c"
 kind = "c"
 source = """
 #include <stdio.h>
@@ -23,7 +21,6 @@ c test
 """
 
 [tests.python]
-name = "python"
 kind = "python"
 source = """
 print("python test")

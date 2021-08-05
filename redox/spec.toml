@@ -1,14 +1,12 @@
 name = "Redox System Interface"
 
 [tests.uname]
-name = "uname"
 source = "uname -sm"
 output = """
 Redox x86_64
 """
 
 [tests.c]
-name = "c"
 kind = "c"
 source = """
 #include <stdio.h>

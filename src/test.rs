@@ -27,7 +27,6 @@ impl Default for TestKind {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Test {
-    pub name: String,
     pub desc: Option<String>,
     #[serde(default)]
     pub kind: TestKind,
@@ -51,7 +50,7 @@ impl Test {
                 TestKind::c => {
                     fs::write(dir.path().join("src.c"), &self.source)?;
                     Command::new("sh")
-                        .arg("-c")
+                        .arg("-ec")
                         .arg("gcc src.c -o bin && ./bin")
                         .current_dir(dir.path())
                         .stdout(Stdio::piped())
@@ -67,7 +66,7 @@ impl Test {
                 },
                 TestKind::shell => {
                     Command::new("sh")
-                        .arg("-c")
+                        .arg("-ec")
                         .arg(&self.source)
                         .current_dir(dir.path())
                         .stdout(Stdio::piped())
