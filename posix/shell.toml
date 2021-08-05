@@ -55,3 +55,80 @@ output = """
 one
 two
 """
+
+#TODO: crontab, csplit
+
+[tests.cut]
+source = """
+echo a,b,c,d,e,f,g | cut -d , -f 2,4,6
+"""
+output = """
+b,d,f
+"""
+
+#TODO: date (uutils version is odd)
+
+[tests.dd]
+source = """
+echo one > 1
+dd if=1 of=2 bs=1 count=2 2>/dev/null
+cat 2
+"""
+output = "on"
+
+#TODO: df (format is different on Redox)
+#TODO: diff (install diffutils on Redox)
+
+
+[tests.dirname]
+source = """
+dirname /usr/bin
+"""
+output = """
+/usr
+"""
+
+[tests.du]
+source = """
+dd if=/dev/zero of=1 bs=1024 count=256 2>/dev/null
+du 1
+"""
+output = """
+256\t1
+"""
+
+[tests.echo]
+source = """
+echo a b c d
+"""
+output = """
+a b c d
+"""
+
+#TODO: ed (the standard editor)
+
+[tests.env]
+source = """
+env KEY=VALUE printenv KEY
+"""
+output = """
+VALUE
+"""
+
+#TODO: ex (interactive program)
+
+[tests.expand]
+source = """
+echo "test\texpand" | expand
+"""
+output = """
+test    expand
+"""
+
+[tests.expr]
+source = """
+expr 2 + 2
+"""
+output = """
+4
+"""
